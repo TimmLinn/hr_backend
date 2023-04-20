@@ -1,0 +1,66 @@
+stages:
+  - test
+  - build
+  - publish
+
+variables:
+  DB_NAME: $DB_NAME
+  DB_USER: $DB_USER
+  DB_PASS: $DB_PASS
+  DB_SERVER: $DB_SERVER
+  JWT: $JWT
+
+test_server:
+  stage: test
+  image: node:latest
+  tags:
+    - she11
+  before_script:
+    - pwd
+    - cd server
+    - npm install
+  script:
+    - pwd
+    - npx mocha test/routes/*.js
+
+test_client:
+  stage: test
+  image: node:latest
+  tags:
+    - she11
+  before_script:
+    - pwd
+    - cd client
+    - npm install
+  script:
+    - pwd
+    - npm start
+    - echo "Frontend tests not implemented yet."
+
+build_docker_image:
+  stage: build
+  tags:
+    - she11
+  before_script:
+    - set IMAGE_VERSION=(Get-Content version.txt)
+  script:
+    - pwd
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID .
+    - docker tag $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID latest
+    - docker images
+
+push_to_registry:
+  stage: publish
+  tags:
+    - she11
+  needs:
+    - build_docker_image
+  before_script:
+    - set IMAGE_VERSION=(Get-Content package.json -Raw | ConvertFrom-Json).version
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - pwd
+    - echo $CI_REGISTRY_IMAGE
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID
+    - docker push $CI_REGISTRY_IMAGE:latest
+
