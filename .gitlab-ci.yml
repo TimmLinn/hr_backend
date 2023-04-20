@@ -23,20 +23,6 @@ test_server:
     - pwd
     - npx mocha test/routes/*.js
 
-test_client:
-  stage: test
-  image: node:latest
-  tags:
-    - she11
-  before_script:
-    - pwd
-    - cd client
-    - npm install
-  script:
-    - pwd
-    - npm start
-    - echo "Frontend tests not implemented yet."
-
 build_docker_image:
   stage: build
   tags:
