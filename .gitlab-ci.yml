@@ -17,7 +17,6 @@ test_server:
     - she11
   before_script:
     - pwd
-    - cd server
     - npm install
   script:
     - pwd
