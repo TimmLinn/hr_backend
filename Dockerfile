@@ -8,11 +8,11 @@ WORKDIR /app
 COPY . .
 
 # 安裝依賴包
-RUN cd server && npm install
+RUN npm install
 
 # 暴露端口號 3001 => docker run -p 3001:3000 -d react-docker-demo
 EXPOSE 5000
 
 # 執行專案
-CMD ["sh", "-c", "cd server && npm start"]
+CMD ["npm", "start"]
 
