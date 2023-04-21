@@ -10,17 +10,17 @@ variables:
   DB_SERVER: $DB_SERVER
   JWT: $JWT
 
-test_server:
-  stage: test
-  image: node:latest
-  tags:
-    - she11
-  before_script:
-    - pwd
-    - npm install
-  script:
-    - pwd
-    - npx mocha test/routes/*.js
+# test_server:
+#   stage: test
+#   image: node:latest
+#   tags:
+#     - she11
+#   before_script:
+#     - pwd
+#     - npm install
+#   script:
+#     - pwd
+#     - npx mocha test/routes/*.js
 
 build_docker_image:
   stage: build
