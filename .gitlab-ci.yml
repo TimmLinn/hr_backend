@@ -47,5 +47,5 @@ push_to_registry:
     - pwd
     - echo $CI_REGISTRY_IMAGE
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_VERSION-build$CI_PIPELINE_IID
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest 
 
