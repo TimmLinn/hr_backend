@@ -15,7 +15,6 @@ test_server:
   image: node:latest
   tags:
     - she11
-    - chooseMe
   before_script:
     - pwd
     - npm install
