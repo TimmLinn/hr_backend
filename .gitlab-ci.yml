@@ -45,7 +45,7 @@ push_to_registry:
   script:
     - pwd
     - docker push ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}-build${CI_PIPELINE_IID}
-    - docker tag ${CI_REGISTRY_IMAGE}:latest
+    - docker tag ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}-build${CI_PIPELINE_IID} ${CI_REGISTRY_IMAGE}:latest
     - docker images
 
 
