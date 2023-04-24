@@ -1,5 +1,5 @@
 # 使用 Node.js 作為基礎映像檔
-FROM node:18.15.0-alpine3.16
+FROM node:18
 
 # 將工作目錄設置為 React 專案的根目錄
 WORKDIR /app
