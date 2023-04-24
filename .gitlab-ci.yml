@@ -30,8 +30,9 @@ build_docker_image:
     - $IMAGE_VERSION = Get-Content version.txt
   script:
     - pwd
-    - docker build --build-arg DB_SERVER=${DB_SERVER} -t ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}-build${CI_PIPELINE_IID} .
+    - docker build -t ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}-build${CI_PIPELINE_IID} .
     - docker images
+    - echo $DB_SERVER
 
 push_to_registry:
   stage: publish
