@@ -90,6 +90,6 @@ deploy_to_server:
     - scp -o StrictHostKeyChecking=no .\docker-compose.yml ${SERVER_NAME}@${SERVER_IP}:/root
     - ssh -o StrictHostKeyChecking=no ${SERVER_NAME}@${SERVER_IP} "
       docker-compose down &&
-      docker compose up -d
+      docker-compose up -d
       "
 
