@@ -59,6 +59,8 @@ const updateOvertime = catchError(async (req, res) => {
             act_end_time: SQLtimeParser(body.act_end_time),
             year: body.year,
         };
+        const updatedOvertime = await overtimeRepository.updateOvertime(seq, data);
+        res.json(updatedOvertime);
     } else {
         const data = {
             ...body,
@@ -66,10 +68,9 @@ const updateOvertime = catchError(async (req, res) => {
             permit_time: SQLtimeParser(now),
             sv_permit: body.sv_permit,
         };
+        const updatedOvertime = await overtimeRepository.updateOvertime(seq, data);
+        res.json(updatedOvertime);
     }
-
-    const updatedOvertime = await overtimeRepository.updateOvertime(seq, data);
-    res.json(updatedOvertime);
 });
 
 const updateBulkOvertime = catchError(async (req, res) => {
