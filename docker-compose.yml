@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  hr1234:
+    image: registry.gitlab.com/timmlinn/hr_backend:1.0.0-build20
+    ports:
+      - 5000:5000
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_SERVER: ${DB_SERVER}
+      JWT: ${JWT}
+    restart: always
