@@ -52,6 +52,8 @@ stages:
 
 deploy_to_server:
   stage: deploy
+  tags:
+    - she11
   before_script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "${SERVER_PRIVATE_KEY}")
