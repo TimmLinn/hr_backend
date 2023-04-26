@@ -58,6 +58,7 @@ deploy_to_server:
     - Get-Service -Name ssh-agent | Set-Service -StartupType Manual
     - Start-Service ssh-agent
     - echo ${SERVER_PRIVATE_KEY} | ssh-add -
+    - ssh ${SERVER_NAME}@${SERVER_IP} "sudo apt-get update && sudo apt-get install -y docker.io docker-compose"
   script:
     - scp -o StrictHostKeyChecking=no .\docker-compose.yml ${SERVER_NAME}@${SERVER_IP}:/root
     - pwd
