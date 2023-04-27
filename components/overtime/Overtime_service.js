@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import overtimeRepository from "./Overtime_repository.js";
-import { transporter } from "../../nodemailer.js";
 import { catchError } from "../../common/catchError.js";
 import { SQLtimeParser, now } from "../../common/timeParser.js";
 import { createOvertimeSchema, updateOvertimeSchema } from "../../schema/OvertimeRecord_schema.js";
