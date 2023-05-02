@@ -2,7 +2,8 @@ stages:
   - test
   - build
   - publish
-  - deploy
+  - deploy_to_dev
+  - deploy_to_stage
 
 variables:
   DB_NAME: $DB_NAME
@@ -50,7 +51,7 @@ push_to_registry:
     - docker tag ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}-build${CI_PIPELINE_IID} ${CI_REGISTRY_IMAGE}:latest
 
 deploy_to_server:
-  stage: deploy
+  stage: deploy_to_dev
   tags:
     - she11
   before_script:
@@ -63,7 +64,32 @@ deploy_to_server:
     - pwd
     - dir
     - ssh -o StrictHostKeyChecking=no ${SERVER_NAME}@${SERVER_IP} "
+
+      export COMPOSE_PROJECT_NAME=DEV
+      export ADD_PORT=3000
+
       docker-compose down &&
       docker-compose up -d
       "
-
+      
+deploy_to_staging:
+  stage: deploy_to_stage
+  tags:
+    - she11
+  before_script:
+    - Get-Service -Name ssh-agent | Set-Service -StartupType Manual
+    - Start-Service ssh-agent
+    - echo ${SERVER_PRIVATE_KEY} | ssh-add -
+    - ssh ${SERVER_NAME}@${SERVER_IP} "sudo apt-get update && sudo apt-get install -y docker.io docker-compose"
+  script:
+    - scp -o StrictHostKeyChecking=no .\docker-compose.yml ${SERVER_NAME}@${SERVER_IP}:/root
+    - pwd
+    - dir
+    - ssh -o StrictHostKeyChecking=no ${SERVER_NAME}@${SERVER_IP} "
+    
+      export COMPOSE_PROJECT_NAME=STAGING
+      export ADD_PORT=5000
+      
+      docker-compose down &&
+      docker-compose up -d
+      "
