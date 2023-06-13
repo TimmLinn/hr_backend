@@ -12,7 +12,9 @@ const app = express()
 // 設置中間件
 app.use(morgan('combined'))
 app.use(loggerMiddleware)
+
 app.use(corsOptions)
+
 app.use(cookieParser())
 app.use(express.json())
 
